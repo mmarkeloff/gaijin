@@ -1,0 +1,19 @@
+FROM gcc
+
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libtcmalloc-minimal4 \
+    cmake \
+    gfortran- \
+    libboost-all-dev \
+    make \
+    libgtest-dev \
+    libtbb-dev
+
+COPY . /cache/
+RUN mkdir -p /cache/test/.build
+WORKDIR /cache/test/.build
+
+RUN cmake .. && make
+
+CMD ["./cache_test"]
