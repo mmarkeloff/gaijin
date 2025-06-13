@@ -65,7 +65,7 @@ void TcpConnection::close() noexcept
     }
     catch (const std::exception &e)
     {
-        logger().log(LogSeverity::ERR, {"TcpConnection::close()", {"what", e.what()}, {"id", m_cid}});
+        logger().log(LogSeverity::DEBUG, {"TcpConnection::close()", {"id", m_cid}});
         return;
     }
     m_observer.onConnectionClosed(m_cid);
@@ -79,7 +79,7 @@ void TcpConnection::doReadAsync() noexcept
     m_socket.async_read_some(buffers, [this, self](const boost::system::error_code &error, auto bytesTransferred) {
         if (error)
         {
-            logger().log(LogSeverity::ERR, {"TcpConnection::doRead()", {"code", error.value()}, {"id", m_cid}});
+            logger().log(LogSeverity::DEBUG, {"TcpConnection::doRead()", {"code", error.value()}, {"id", m_cid}});
             return close();
         }
         m_readBuf.commit(bytesTransferred);
