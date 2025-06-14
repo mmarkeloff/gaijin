@@ -23,9 +23,14 @@ private:
 public:
     Logger(LogSeverity lvl);
     ~Logger();
+    Logger(const Logger& ) = delete;
+    Logger(Logger&&) = delete;
+    Logger& operator=(const Logger&) = delete;
+    Logger& operator=(Logger&&) = delete;
 
     void log(LogSeverity msgLvl, LogMessage &&msg) noexcept;
 
+private:
     void work() noexcept;
 
 private:
